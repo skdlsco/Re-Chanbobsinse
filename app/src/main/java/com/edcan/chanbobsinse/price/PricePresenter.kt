@@ -1,6 +1,5 @@
 package com.edcan.chanbobsinse.price
 
-import android.util.Log
 import java.text.DecimalFormat
 
 /**
@@ -10,7 +9,7 @@ class PricePresenter : PriceContract.Presenter {
     override lateinit var view: PriceContract.View
 
     override fun start() {
-
+        view.initEditText()
     }
 
     override fun changeText(input: String): String {

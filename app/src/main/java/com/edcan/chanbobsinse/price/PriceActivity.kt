@@ -9,9 +9,11 @@ import android.support.v7.app.AppCompatActivity
 import android.view.MenuItem
 import android.view.View
 import com.edcan.chanbobsinse.R
+import com.edcan.chanbobsinse.searching.SearchingActivity
 import kotlinx.android.synthetic.main.activity_price.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.sdk25.coroutines.textChangedListener
+import org.jetbrains.anko.startActivity
 
 class PriceActivity : AppCompatActivity(), PriceContract.View {
 
@@ -36,9 +38,13 @@ class PriceActivity : AppCompatActivity(), PriceContract.View {
         }
 
         btnNext.onClick {
-            //            startActivity<>()
+            startActivity<SearchingActivity>()
         }
 
+        presenter.start()
+    }
+
+    override fun initEditText() {
         minPrice.textChangedListener {
             var result = ""
             onTextChanged { charSequence, _, _, _ ->

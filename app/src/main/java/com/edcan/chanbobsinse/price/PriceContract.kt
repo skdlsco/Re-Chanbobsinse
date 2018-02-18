@@ -8,6 +8,7 @@ import com.edcan.chanbobsinse.BaseView
  */
 interface PriceContract {
     interface View : BaseView<Presenter> {
+        fun initEditText()
     }
 
     interface Presenter : BasePresenter {
