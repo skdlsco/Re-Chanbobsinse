@@ -12,12 +12,7 @@ class PricePresenter : PriceContract.Presenter {
         view.initEditText()
     }
 
-    override fun changeText(input: String): String {
-        val decimalFormat = DecimalFormat("#,##0")
-        val output = decimalFormat.format(input.replace(",", "").toInt())
-        if (output.last() == ',')
-            output.substring(0, output.lastIndex - 1)
-        return output
+    override fun nextBtnClick() {
+        view.startSearchingActivity()
     }
-
 }

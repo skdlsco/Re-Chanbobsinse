@@ -1,5 +1,6 @@
 package com.edcan.chanbobsinse.searching
 
+
 /**
  * Created by eka on 2018. 2. 19..
  */

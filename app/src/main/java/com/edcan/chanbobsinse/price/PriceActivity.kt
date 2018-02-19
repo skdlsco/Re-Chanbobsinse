@@ -10,6 +10,7 @@ import android.view.MenuItem
 import android.view.View
 import com.edcan.chanbobsinse.R
 import com.edcan.chanbobsinse.searching.SearchingActivity
+import com.edcan.chanbobsinse.utils.Util
 import kotlinx.android.synthetic.main.activity_price.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.sdk25.coroutines.textChangedListener
@@ -30,51 +31,53 @@ class PriceActivity : AppCompatActivity(), PriceContract.View {
             back?.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP)
             setHomeAsUpIndicator(back)
             setDisplayHomeAsUpEnabled(true)
-            title = ""
+            setDisplayShowTitleEnabled(false)
         }
 
         presenter = PricePresenter().apply {
             view = this@PriceActivity
         }
-
-        btnNext.onClick {
-            startActivity<SearchingActivity>()
-        }
-
         presenter.start()
+        btnNext.onClick {
+            presenter.nextBtnClick()
+        }
     }
 
     override fun initEditText() {
-        minPrice.textChangedListener {
+        minPriceEditText.textChangedListener {
             var result = ""
             onTextChanged { charSequence, _, _, _ ->
                 if (charSequence.toString().isNotEmpty() && charSequence.toString() != result) {
-                    result = presenter.changeText(charSequence.toString())
-                    minPrice.setText(result)
-                    minPrice.setSelection(result.length)
+                    result = Util.formatMoney(charSequence.toString())
+                    minPriceEditText.setText(result)
+                    minPriceEditText.setSelection(result.length)
                 }
             }
         }
-        maxPrice.textChangedListener {
+        maxPriceEditText.textChangedListener {
             var result = ""
             onTextChanged { charSequence, _, _, _ ->
                 if (charSequence.toString().isNotEmpty() && charSequence.toString() != result) {
-                    result = presenter.changeText(charSequence.toString())
-                    maxPrice.setText(result)
-                    maxPrice.setSelection(result.length)
+                    result = Util.formatMoney(charSequence.toString())
+                    maxPriceEditText.setText(result)
+                    maxPriceEditText.setSelection(result.length)
                 }
             }
         }
-        rangePrice.textChangedListener {
+        rangePriceEditText.textChangedListener {
             var result = ""
             onTextChanged { charSequence, _, _, _ ->
                 if (charSequence.toString().isNotEmpty() && charSequence.toString() != result) {
-                    result = presenter.changeText(charSequence.toString())
-                    rangePrice.setText(result)
-                    rangePrice.setSelection(result.length)
+                    result = Util.formatMoney(charSequence.toString())
+                    rangePriceEditText.setText(result)
+                    rangePriceEditText.setSelection(result.length)
                 }
             }
         }
+    }
+
+    override fun startSearchingActivity() {
+        startActivity<SearchingActivity>()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

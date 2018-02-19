@@ -9,10 +9,11 @@ import com.edcan.chanbobsinse.BaseView
 interface PriceContract {
     interface View : BaseView<Presenter> {
         fun initEditText()
+        fun startSearchingActivity()
     }
 
     interface Presenter : BasePresenter {
         var view: PriceContract.View
-        fun changeText(input: String): String
+        fun nextBtnClick()
     }
 }

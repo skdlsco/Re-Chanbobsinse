@@ -5,7 +5,9 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.edcan.chanbobsinse.R
+import com.edcan.chanbobsinse.result.ResultActivity
 import kotlinx.android.synthetic.main.activity_searching.*
+import org.jetbrains.anko.startActivity
 
 class SearchingActivity : AppCompatActivity(), SearchingContract.View {
 
@@ -19,6 +21,8 @@ class SearchingActivity : AppCompatActivity(), SearchingContract.View {
         presenter.view = this
 
         presenter.start()
+
+        startActivity<ResultActivity>()
     }
 
     override fun setImageColor() {
