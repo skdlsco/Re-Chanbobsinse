@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.edcan.chanbobsinse.view.main.MainActivity
 import org.jetbrains.anko.startActivity
 
 class SplashActivity : AppCompatActivity() {
@@ -15,6 +16,7 @@ class SplashActivity : AppCompatActivity() {
 
         Handler().postDelayed({
             startActivity<MainActivity>()
+            finish()
         }, 500)
     }
 }

@@ -2,6 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.edcan.chanbobsinse">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,10 +19,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity" />
-        <activity android:name=".price.PriceActivity" />
-        <activity android:name=".searching.SearchingActivity" />
-        <activity android:name=".result.ResultActivity"></activity>
+        <activity android:name="com.edcan.chanbobsinse.view.main.MainActivity" />
+        <activity android:name="com.edcan.chanbobsinse.view.price.PriceActivity" />
+        <activity android:name="com.edcan.chanbobsinse.view.searching.SearchingActivity" />
+        <activity android:name="com.edcan.chanbobsinse.view.result.ResultActivity" />
     </application>
 
 </manifest>

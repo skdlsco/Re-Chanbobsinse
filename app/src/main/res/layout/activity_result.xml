@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context="com.edcan.chanbobsinse.result.ResultActivity">
+    tools:context=".view.result.ResultActivity">
 
     <android.support.design.widget.AppBarLayout
         android:id="@+id/appBar"
@@ -19,7 +19,7 @@
             android:fitsSystemWindows="true"
             app:contentScrim="@color/colorOrange"
             app:layout_scrollFlags="scroll|exitUntilCollapsed"
-            app:scrimAnimationDuration="1000">
+            app:scrimAnimationDuration="500">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -75,8 +75,8 @@
                     android:layout_margin="16dp"
                     android:orientation="horizontal">
 
-                    <TextView
-                        android:id="@+id/placeTextView"
+                    <EditText
+                        android:id="@+id/placeEditText"
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
                         android:layout_weight="1"
@@ -86,6 +86,7 @@
                         android:textColor="@android:color/white"
                         android:textSize="14sp"
                         tools:text="서울 용산구 청파동" />
+
 
                     <ImageView
                         android:layout_width="32dp"
@@ -117,23 +118,11 @@
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>
 
-    <android.support.v4.widget.NestedScrollView
-        android:id="@+id/scrollView"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/restaurantsRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior">
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="12345"
-                android:textSize="500sp" />
-        </LinearLayout>
-    </android.support.v4.widget.NestedScrollView>
+        app:layout_behavior="@string/appbar_scrolling_view_behavior" />
 
     <LinearLayout
         android:id="@+id/coverView"
@@ -141,7 +130,7 @@
         android:layout_height="match_parent"
         android:background="#f2ffffff"
         android:padding="16dp"
-        android:visibility="gone">
+        android:visibility="invisible">
 
         <LinearLayout
             android:layout_width="wrap_content"

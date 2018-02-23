@@ -1,5 +1,6 @@
-package com.edcan.chanbobsinse.result
+package com.edcan.chanbobsinse.view.result
 
+import android.animation.ValueAnimator
 import android.annotation.SuppressLint
 import android.graphics.Color
 import android.graphics.PorterDuff
@@ -10,10 +11,12 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.MenuItem
 import android.view.View
-import com.edcan.chanbobsinse.AlphaAnimation
 import com.edcan.chanbobsinse.R
 import com.edcan.chanbobsinse.listener.AppBarOffSetChangedListener
+import com.edcan.chanbobsinse.models.Price
 import kotlinx.android.synthetic.main.activity_result.*
+import org.jetbrains.anko.contentView
+import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class ResultActivity : AppCompatActivity(), ResultContract.View {
 
@@ -36,26 +39,35 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
         }
         presenter = ResultPresenter().apply {
             view = this@ResultActivity
-            start()
         }
 
-        appBar.addOnOffsetChangedListener(object : AppBarOffSetChangedListener() {
-            val animation = AlphaAnimation(toolbarTitle, 1f, 0f, 500)
-            override fun onCollapseStartListener(appBarLayout: AppBarLayout?) {
+        presenter.start()
+        initAppBar()
 
-                animation.run {
-                    to = 1f
-                    from = toolbarTitle.alpha
-                    Log.e("collapse", "$from")
+        FAB.onClick {
+            FAB.isSelected = !FAB.isSelected
+            presenter.floatingActionButtonClick(FAB.isSelected)
+        }
+    }
+
+    private fun initAppBar() {
+        val animator = ValueAnimator.ofFloat().apply {
+            duration = 500
+            addUpdateListener {
+                toolbarTitle.alpha = it.animatedValue as Float
+            }
+        }
+        appBar.addOnOffsetChangedListener(object : AppBarOffSetChangedListener() {
+            override fun onCollapseStartListener(appBarLayout: AppBarLayout?) {
+                animator.run {
+                    animator.setFloatValues(toolbarTitle.alpha, 1f)
                     start()
                 }
             }
 
             override fun onExpandedStartListener(appBarLayout: AppBarLayout?) {
-                animation.run {
-                    to = 0f
-                    from = toolbarTitle.alpha
-                    Log.e("expanded", "$from")
+                animator.run {
+                    animator.setFloatValues(toolbarTitle.alpha, 0f)
                     start()
                 }
             }
@@ -64,8 +76,34 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
             }
         })
     }
+
+    override fun parsingIntent() {
+        val price = Price().apply {
+            val array = intent.extras.getStringArrayList("price")
+            min = array[0]
+            max = array[1]
+            range = array[2]
+        }
+        val address = intent.extras.getString("address")
+        val categories = intent.extras.getStringArrayList("categories")
+        presenter.initData(price, address, categories)
+    }
+
     override fun showPriceRange(string: String) {
         priceRangeTextView.text = string
+    }
+
+    override fun showCoverView() {
+        coverView.visibility = View.VISIBLE
+        FAB.background.setColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC)
+        Log.e("asdf", "asdf ${coverView.height}")
+        Log.e("asdf", "asdf ${contentView!!.height}")
+
+    }
+
+    override fun hideCoverView() {
+        coverView.visibility = View.GONE
+        FAB.background.setColorFilter(ContextCompat.getColor(this, R.color.colorOrange), PorterDuff.Mode.SRC)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
