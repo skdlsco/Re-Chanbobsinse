@@ -8,14 +8,19 @@ import android.os.Bundle
 import android.support.design.widget.AppBarLayout
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
-import android.util.Log
+import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import android.view.View
+import com.edcan.chanbobsinse.BR
 import com.edcan.chanbobsinse.R
+import com.edcan.chanbobsinse.databinding.ItemRestaurantsBinding
 import com.edcan.chanbobsinse.listener.AppBarOffSetChangedListener
+import com.edcan.chanbobsinse.models.Category
 import com.edcan.chanbobsinse.models.Price
+import com.edcan.chanbobsinse.models.Restaurant
+import com.github.nitrico.lastadapter.LastAdapter
 import kotlinx.android.synthetic.main.activity_result.*
-import org.jetbrains.anko.contentView
+import kotlinx.android.synthetic.main.item_restaurants.view.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 
 class ResultActivity : AppCompatActivity(), ResultContract.View {
@@ -45,6 +50,13 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
         initAppBar()
 
         FAB.onClick {
+            FAB.isSelected = !FAB.isSelected
+            presenter.floatingActionButtonClick(FAB.isSelected)
+        }
+        btnRandomYes.onClick {
+            presenter.randomButtonClick()
+        }
+        btnRandomNo.onClick {
             FAB.isSelected = !FAB.isSelected
             presenter.floatingActionButtonClick(FAB.isSelected)
         }
@@ -85,25 +97,53 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
             range = array[2]
         }
         val address = intent.extras.getString("address")
-        val categories = intent.extras.getStringArrayList("categories")
+        val categories = intent.extras.getParcelableArrayList<Category>("categories")
         presenter.initData(price, address, categories)
+    }
+
+    override fun initCategoryRecyclerView(categories: ArrayList<Category>) {
+        categoryRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+        LastAdapter(categories, BR.item)
+                .map<Category>(R.layout.item_result_category)
+                .into(categoryRecyclerView)
+    }
+
+    override fun initRestaurantsRecyclerView(restaurants: ArrayList<Restaurant>) {
+        restaurantsRecyclerView.layoutManager = LinearLayoutManager(this)
+        LastAdapter(restaurants, BR.item)
+                .map<Restaurant, ItemRestaurantsBinding>(R.layout.item_restaurants) {
+                    onBind {
+                        it.itemView.categoryRecyclerView.layoutManager = LinearLayoutManager(this@ResultActivity,
+                                LinearLayoutManager.HORIZONTAL,
+                                false)
+                        it.itemView.ratingBar.rating = it.binding.item!!.rating
+                        LastAdapter(it.binding.item!!.categories, BR.item)
+                                .map<Category>(R.layout.item_restaurants_category)
+                                .into(it.itemView.categoryRecyclerView)
+                    }
+                }
+                .into(restaurantsRecyclerView)
     }
 
     override fun showPriceRange(string: String) {
         priceRangeTextView.text = string
     }
 
+    override fun updateAddress(address: String) {
+        addressTextView.text = address
+    }
+
     override fun showCoverView() {
         coverView.visibility = View.VISIBLE
-        FAB.background.setColorFilter(ContextCompat.getColor(this, android.R.color.white), PorterDuff.Mode.SRC)
-        Log.e("asdf", "asdf ${coverView.height}")
-        Log.e("asdf", "asdf ${contentView!!.height}")
+        FAB.background.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC)
+        FAB.drawable.setColorFilter(ContextCompat.getColor(this, R.color.colorOrange), PorterDuff.Mode.SRC_ATOP)
 
     }
 
     override fun hideCoverView() {
         coverView.visibility = View.GONE
         FAB.background.setColorFilter(ContextCompat.getColor(this, R.color.colorOrange), PorterDuff.Mode.SRC)
+        FAB.drawable.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC_ATOP)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

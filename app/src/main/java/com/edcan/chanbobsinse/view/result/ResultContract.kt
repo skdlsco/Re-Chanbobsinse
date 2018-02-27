@@ -1,8 +1,10 @@
 package com.edcan.chanbobsinse.view.result
 
+import com.edcan.chanbobsinse.models.Category
+import com.edcan.chanbobsinse.models.Price
+import com.edcan.chanbobsinse.models.Restaurant
 import com.edcan.chanbobsinse.view.BasePresenter
 import com.edcan.chanbobsinse.view.BaseView
-import com.edcan.chanbobsinse.models.Price
 import com.github.nitrico.lastadapter.LastAdapter
 
 /**
@@ -14,6 +16,9 @@ interface ResultContract {
         fun showCoverView()
         fun hideCoverView()
         fun parsingIntent()
+        fun updateAddress(address: String)
+        fun initCategoryRecyclerView(categories: ArrayList<Category>)
+        fun initRestaurantsRecyclerView(restaurants: ArrayList<Restaurant>)
     }
 
     interface Presenter : BasePresenter {
@@ -21,8 +26,9 @@ interface ResultContract {
         var model: ResultModel
         var categoryAdapter: LastAdapter
         var restaurantAdapter: LastAdapter
-        fun initData(price: Price, address: String, categories: ArrayList<String>)
+        fun initData(price: Price, address: String, categories: ArrayList<Category>)
         fun getRandomMenu()
         fun floatingActionButtonClick(show: Boolean)
+        fun randomButtonClick()
     }
 }

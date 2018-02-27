@@ -1,9 +1,10 @@
-package com.edcan.chanbobsinse
+package com.edcan.chanbobsinse.view
 
 import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.edcan.chanbobsinse.R
 import com.edcan.chanbobsinse.view.main.MainActivity
 import org.jetbrains.anko.startActivity
 

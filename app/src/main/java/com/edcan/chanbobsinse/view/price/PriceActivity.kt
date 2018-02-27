@@ -99,6 +99,7 @@ class PriceActivity : AppCompatActivity(), PriceContract.View {
                                 // 0 = min, 1 = max, 2 = range
                                 result = it.getArray()[i]
                                 editTexts[i].setText(result)
+                                editTexts[i].setSelection(result.length)
                             })
                 }
             }

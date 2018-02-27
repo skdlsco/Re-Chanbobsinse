@@ -35,14 +35,11 @@ class MainModel {
     fun makeAddress(callback: () -> Unit) {
         gpsInfo!!.getLocation()
         val latlng = "${gpsInfo!!.lon},${gpsInfo!!.lat}"
-        Log.e("Adsf", "query = $latlng")
         NetworkHelper.mapInstance.changeAddress(latlng, "WAtJVVGhyrZDGy4TGVXW", "AtG79bTvJh").enqueue(object : Callback<ResponseBody> {
             override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
             }
 
             override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
-                Log.e("Asdf", "msg = ${response?.message()}")
-                Log.e("Asdf", "code = ${response?.code()}")
                 val json = JSONObject(response?.body()!!.string())
                         .getJSONObject("result")
                         .getJSONArray("items").getJSONObject(0).getJSONObject("addrdetail")
