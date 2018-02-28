@@ -19,10 +19,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name="com.edcan.chanbobsinse.view.main.MainActivity" />
-        <activity android:name="com.edcan.chanbobsinse.view.price.PriceActivity" />
-        <activity android:name="com.edcan.chanbobsinse.view.searching.SearchingActivity" />
-        <activity android:name="com.edcan.chanbobsinse.view.result.ResultActivity" />
+        <activity android:name=".view.main.MainActivity" />
+        <activity android:name=".view.price.PriceActivity" />
+        <activity android:name=".view.searching.SearchingActivity" />
+        <activity android:name=".view.result.ResultActivity" />
+        <activity android:name=".view.detail.DetailActivity"></activity>
     </application>
 
 </manifest>

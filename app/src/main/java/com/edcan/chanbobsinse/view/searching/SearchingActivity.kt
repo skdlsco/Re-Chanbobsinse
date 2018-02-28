@@ -5,6 +5,8 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.view.View
 import com.edcan.chanbobsinse.R
+import com.edcan.chanbobsinse.models.Category
+import com.edcan.chanbobsinse.models.Price
 import com.edcan.chanbobsinse.view.result.ResultActivity
 import kotlinx.android.synthetic.main.activity_searching.*
 import org.jetbrains.anko.startActivity
@@ -30,9 +32,9 @@ class SearchingActivity : AppCompatActivity(), SearchingContract.View {
     }
 
     override fun startResultActivity(extras: Bundle) {
-        val price = extras.getStringArrayList("price")
-        val categories = extras.getStringArrayList("categories")
-        val address = extras["address"] as String
+        val price = extras.getParcelable<Price>("price")
+        val categories = extras.getParcelableArrayList<Category>("categories")
+        val address = extras.getString("address")
         startActivity<ResultActivity>("price" to price, "address" to address, "categories" to categories)
     }
 }

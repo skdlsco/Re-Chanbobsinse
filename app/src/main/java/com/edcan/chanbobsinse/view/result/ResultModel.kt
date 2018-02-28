@@ -17,8 +17,16 @@ class ResultModel {
             address = "서울시 용산구 청파로 45길 11"
             phone = "02-711-2016"
             rating = 3.5f
-            categories.add(Category("한식", "ㅁㄴㅇㄹ"))
-            categories.add(Category("일식", "ㅁㄴㅇㄹ"))
+            categories.run {
+                add(Category().apply {
+                    title = "한식"
+                    discription = "오늘따라 집밥이 그리울 때,\n밖에서 먹는 우리집의 맛"
+                })
+                add(Category().apply {
+                    title = "일식"
+                    discription = "초밥, 돈까스, 회, 카레 등등…\n익숙하지만 언제든 먹고싶은 음식"
+                })
+            }
         }
         restaurants.add(data)
         restaurants.add(data)

@@ -1,5 +1,6 @@
 package com.edcan.chanbobsinse.view.price
 
+import com.edcan.chanbobsinse.models.Category
 import com.edcan.chanbobsinse.view.BasePresenter
 import com.edcan.chanbobsinse.view.BaseView
 import com.edcan.chanbobsinse.models.Price
@@ -10,7 +11,7 @@ import com.edcan.chanbobsinse.models.Price
 interface PriceContract {
     interface View : BaseView<Presenter> {
         fun initEditText()
-        fun startSearchingActivity(address: String, categories: ArrayList<String>, price: Price)
+        fun startSearchingActivity(address: String, categories: ArrayList<Category>, price: Price)
         fun showToast(msg: String)
         fun parsingIntent()
     }
@@ -19,7 +20,7 @@ interface PriceContract {
         var view: PriceContract.View
         var model: PriceModel
         fun nextBtnClick()
-        fun initData(address: String, categories: ArrayList<String>)
+        fun initData(address: String, categories: ArrayList<Category>)
         fun updatePrices(min: String, max: String, range: String, func: (Price) -> Unit)
     }
 }

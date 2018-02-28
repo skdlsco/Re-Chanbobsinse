@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.edcan.chanbobsinse.view.detail.DetailActivity">
+
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingEnd="16dp"
+        android:paddingStart="16dp">
+
+
+        <TextView
+            android:id="@+id/titleTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/nanum_square_bold"
+            android:textColor="#de000000"
+            android:textSize="18sp"
+            tools:text="마카나이" />
+
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/categoryRecyclerView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp" />
+
+        <TextView
+            android:id="@+id/addressTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:fontFamily="@font/nanum_square_regular"
+            android:textColor="@color/colorBlack"
+            android:textSize="12sp"
+            tools:text="서울시 용산구 청파로 45길 11" />
+
+        <TextView
+            android:id="@+id/phoneTextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:fontFamily="@font/nanum_square_regular"
+            android:textColor="@color/colorBlack"
+            android:textSize="12sp"
+            tools:text="02-711-2016" />
+
+        <com.iarcuschin.simpleratingbar.SimpleRatingBar
+            android:id="@+id/ratingBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            app:srb_drawBorderEnabled="false"
+            app:srb_fillColor="@color/colorFillStar"
+            app:srb_starBackgroundColor="@color/colorUnFillStar"
+            app:srb_starCornerRadius="0"
+            app:srb_starSize="20dp"
+            app:srb_stepSize="0.5" />
+    </LinearLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/menuRecyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1" />
+
+    <android.support.v7.widget.AppCompatButton
+        android:id="@+id/nextButton"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_margin="16dp"
+        android:background="@drawable/box_orange_solid_radius"
+        android:fontFamily="@font/nanum_square_extra_bold"
+        android:text="다음"
+        android:textColor="@android:color/white"
+        android:textSize="18sp"
+        app:elevation="10dp" />
+</LinearLayout>

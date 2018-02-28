@@ -30,7 +30,7 @@ class ResultPresenter : ResultContract.Presenter {
 
     override fun initData(price: Price, address: String, categories: ArrayList<Category>) {
         model.address = address
-        model.categories = categories
+        model.categories.addAll(categories)
         val output = "${price.min}￦ ~ ${price.max}￦ (±${if (price.range != "") price.range else "0"})"
         view.showPriceRange(output)
         view.updateAddress(address)

@@ -1,12 +1,13 @@
 package com.edcan.chanbobsinse.view.price
 
+import com.edcan.chanbobsinse.models.Category
 import com.edcan.chanbobsinse.models.Price
 
 /**
  * Created by eka on 2018. 2. 21..
  */
 class PriceModel {
-    var categories = ArrayList<String>()
+    var categories = ArrayList<Category>()
     var address = ""
     var price = Price()
 

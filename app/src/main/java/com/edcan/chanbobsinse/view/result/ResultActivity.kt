@@ -9,6 +9,7 @@ import android.support.design.widget.AppBarLayout
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import com.edcan.chanbobsinse.BR
@@ -69,7 +70,7 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
                 toolbarTitle.alpha = it.animatedValue as Float
             }
         }
-        appBar.addOnOffsetChangedListener(object : AppBarOffSetChangedListener() {
+        appBar.addOnOffsetChangedListener(object : AppBarOffSetChangedListener(0.7) {
             override fun onCollapseStartListener(appBarLayout: AppBarLayout?) {
                 animator.run {
                     animator.setFloatValues(toolbarTitle.alpha, 1f)
@@ -90,12 +91,8 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
     }
 
     override fun parsingIntent() {
-        val price = Price().apply {
-            val array = intent.extras.getStringArrayList("price")
-            min = array[0]
-            max = array[1]
-            range = array[2]
-        }
+        Log.e("브에엑", "${intent.extras.get("address")}")
+        val price = intent.extras.getParcelable<Price>("price")
         val address = intent.extras.getString("address")
         val categories = intent.extras.getParcelableArrayList<Category>("categories")
         presenter.initData(price, address, categories)
@@ -117,6 +114,7 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
                                 LinearLayoutManager.HORIZONTAL,
                                 false)
                         it.itemView.ratingBar.rating = it.binding.item!!.rating
+                        it.itemView.ratingBar.setOnTouchListener { _, _ -> true }
                         LastAdapter(it.binding.item!!.categories, BR.item)
                                 .map<Category>(R.layout.item_restaurants_category)
                                 .into(it.itemView.categoryRecyclerView)

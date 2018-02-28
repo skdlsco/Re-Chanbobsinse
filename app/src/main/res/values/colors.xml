@@ -7,4 +7,7 @@
 
     <color name="colorOrange">#fe6a30</color>
     <color name="colorItemTitle">#dd000000</color>
+
+    <color name="colorFillStar">#ffd830</color>
+    <color name="colorUnFillStar">#FFF6CC</color>
 </resources>

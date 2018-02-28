@@ -6,12 +6,7 @@ import android.os.Parcelable
 /**
  * Created by eka on 2018. 2. 22..
  */
-class Category() : Parcelable {
-    constructor(title: String, discription: String) : this() {
-        this.title = title
-        this.discription = discription
-    }
-
+class Category() : Parcelable{
     var title = ""
     var discription = ""
     var isSelected = false

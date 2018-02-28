@@ -1,5 +1,6 @@
 package com.edcan.chanbobsinse.view.price
 
+import com.edcan.chanbobsinse.models.Category
 import com.edcan.chanbobsinse.models.Price
 
 /**
@@ -14,7 +15,7 @@ class PricePresenter : PriceContract.Presenter {
         view.initEditText()
     }
 
-    override fun initData(address: String, categories: ArrayList<String>) {
+    override fun initData(address: String, categories: ArrayList<Category>) {
         model.address = address
         model.categories = categories
     }

@@ -12,6 +12,7 @@ import android.view.MenuItem
 import android.view.View
 import android.widget.EditText
 import com.edcan.chanbobsinse.R
+import com.edcan.chanbobsinse.models.Category
 import com.edcan.chanbobsinse.models.Price
 import com.edcan.chanbobsinse.view.searching.SearchingActivity
 import kotlinx.android.synthetic.main.activity_price.*
@@ -59,12 +60,12 @@ class PriceActivity : AppCompatActivity(), PriceContract.View {
 
     override fun parsingIntent() {
         val address = intent.extras.getString("address")
-        val categories = intent.extras.getStringArrayList("categories") as ArrayList<String>
+        val categories: ArrayList<Category> = intent.extras.getParcelableArrayList<Category>("categories")
         presenter.initData(address, categories)
     }
 
-    override fun startSearchingActivity(address: String, categories: ArrayList<String>, price: Price) {
-        startActivity<SearchingActivity>("address" to address, "categories" to categories, "price" to price.getArray())
+    override fun startSearchingActivity(address: String, categories: ArrayList<Category>, price: Price) {
+        startActivity<SearchingActivity>("address" to address, "categories" to categories, "price" to price)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {
