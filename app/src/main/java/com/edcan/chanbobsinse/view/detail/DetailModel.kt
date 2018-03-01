@@ -1,5 +1,6 @@
 package com.edcan.chanbobsinse.view.detail
 
+import com.edcan.chanbobsinse.models.Price
 import com.edcan.chanbobsinse.models.Restaurant
 
 /**
@@ -7,5 +8,7 @@ import com.edcan.chanbobsinse.models.Restaurant
  */
 class DetailModel {
     var restaurant = Restaurant()
+    var price = Price()
 
+    fun getSelectedMenu() = restaurant.menus.filter { it.isSelected }
 }

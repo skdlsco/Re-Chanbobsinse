@@ -12,13 +12,17 @@ import com.github.nitrico.lastadapter.LastAdapter
  */
 interface ResultContract {
     interface View : BaseView<Presenter> {
+        fun parsingIntent()
+
         fun showPriceRange(string: String)
         fun showCoverView()
         fun hideCoverView()
-        fun parsingIntent()
         fun updateAddress(address: String)
+
         fun initCategoryRecyclerView(categories: ArrayList<Category>)
         fun initRestaurantsRecyclerView(restaurants: ArrayList<Restaurant>)
+
+        fun startDetailActivity(restaurant: Restaurant, price: Price)
     }
 
     interface Presenter : BasePresenter {
@@ -27,8 +31,9 @@ interface ResultContract {
         var categoryAdapter: LastAdapter
         var restaurantAdapter: LastAdapter
         fun initData(price: Price, address: String, categories: ArrayList<Category>)
-        fun getRandomMenu()
+
         fun floatingActionButtonClick(show: Boolean)
         fun randomButtonClick()
+        fun restaurantsItemClick(restaurant: Restaurant)
     }
 }

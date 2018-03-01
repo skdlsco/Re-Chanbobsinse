@@ -2,6 +2,7 @@ package com.edcan.chanbobsinse.view.result
 
 import com.edcan.chanbobsinse.models.Category
 import com.edcan.chanbobsinse.models.Price
+import com.edcan.chanbobsinse.models.Restaurant
 import com.github.nitrico.lastadapter.LastAdapter
 
 /**
@@ -14,12 +15,7 @@ class ResultPresenter : ResultContract.Presenter {
     override lateinit var categoryAdapter: LastAdapter
     override lateinit var restaurantAdapter: LastAdapter
 
-    override fun getRandomMenu() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
-    }
-
     override fun randomButtonClick() {
-        TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
 
     override fun start() {
@@ -31,8 +27,8 @@ class ResultPresenter : ResultContract.Presenter {
     override fun initData(price: Price, address: String, categories: ArrayList<Category>) {
         model.address = address
         model.categories.addAll(categories)
-        val output = "${price.min}￦ ~ ${price.max}￦ (±${if (price.range != "") price.range else "0"})"
-        view.showPriceRange(output)
+        model.price = price
+        view.showPriceRange(model.getRangeText())
         view.updateAddress(address)
         model.initRestaurants()
     }
@@ -42,5 +38,9 @@ class ResultPresenter : ResultContract.Presenter {
             view.showCoverView()
         else
             view.hideCoverView()
+    }
+
+    override fun restaurantsItemClick(restaurant: Restaurant) {
+        view.startDetailActivity(restaurant, model.price)
     }
 }

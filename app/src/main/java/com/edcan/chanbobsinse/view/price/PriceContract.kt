@@ -10,17 +10,21 @@ import com.edcan.chanbobsinse.models.Price
  */
 interface PriceContract {
     interface View : BaseView<Presenter> {
-        fun initEditText()
-        fun startSearchingActivity(address: String, categories: ArrayList<Category>, price: Price)
-        fun showToast(msg: String)
         fun parsingIntent()
+
+        fun initEditText()
+        fun showToast(msg: String)
+
+        fun startSearchingActivity(address: String, categories: ArrayList<Category>, price: Price)
     }
 
     interface Presenter : BasePresenter {
         var view: PriceContract.View
         var model: PriceModel
-        fun nextBtnClick()
         fun initData(address: String, categories: ArrayList<Category>)
+
         fun updatePrices(min: String, max: String, range: String, func: (Price) -> Unit)
+
+        fun nextBtnClick()
     }
 }

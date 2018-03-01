@@ -11,18 +11,21 @@ import com.github.nitrico.lastadapter.LastAdapter
  */
 interface MainContract {
     interface View : BaseView<Presenter> {
-        fun startPriceActivity(categories: ArrayList<Category>, address: String)
-        fun initRecyclerView(categories: ArrayList<Category>)
         fun showToast(message: String)
         fun updateAddress(address: String)
+
+        fun initRecyclerView(categories: ArrayList<Category>)
+
+        fun startPriceActivity(categories: ArrayList<Category>, address: String)
     }
 
     interface Presenter : BasePresenter {
         var view: View
         var model: MainModel
-        fun nextButtonClick()
-        fun categoryClick(adapter: LastAdapter, position: Int)
         fun permissionResult(grantResults: IntArray, context: Context)
         fun initGpsInfo(context: Context)
+
+        fun nextButtonClick()
+        fun categoryClick(adapter: LastAdapter, position: Int)
     }
 }

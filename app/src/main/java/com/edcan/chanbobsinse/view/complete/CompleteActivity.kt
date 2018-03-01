@@ -1,4 +1,4 @@
-package com.edcan.chanbobsinse.view.detail
+package com.edcan.chanbobsinse.view.complete
 
 import android.annotation.SuppressLint
 import android.graphics.Color
@@ -15,41 +15,43 @@ import com.edcan.chanbobsinse.models.Category
 import com.edcan.chanbobsinse.models.Menu
 import com.edcan.chanbobsinse.models.Price
 import com.edcan.chanbobsinse.models.Restaurant
-import com.edcan.chanbobsinse.view.complete.CompleteActivity
+import com.edcan.chanbobsinse.view.main.MainActivity
 import com.github.nitrico.lastadapter.LastAdapter
-import kotlinx.android.synthetic.main.activity_detail.*
+import kotlinx.android.synthetic.main.activity_complete.*
 import kotlinx.android.synthetic.main.item_menu.view.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.startActivity
 
-class DetailActivity : AppCompatActivity(), DetailContract.View {
+class CompleteActivity : AppCompatActivity(), CompleteContract.View {
 
-    override var presenter: DetailContract.Presenter = DetailPresenter()
+    override var presenter: CompleteContract.Presenter = CompletePresenter()
 
     @SuppressLint("PrivateResource")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_detail)
+        setContentView(R.layout.activity_complete)
+
 
         setSupportActionBar(toolbar)
         supportActionBar?.run {
-            val back = ContextCompat.getDrawable(this@DetailActivity, R.drawable.abc_ic_ab_back_material)
+            val back = ContextCompat.getDrawable(this@CompleteActivity, R.drawable.abc_ic_ab_back_material)
             back?.setColorFilter(Color.BLACK, PorterDuff.Mode.SRC_ATOP)
             setHomeAsUpIndicator(back)
             setDisplayHomeAsUpEnabled(true)
             setDisplayShowTitleEnabled(false)
         }
+
         presenter.view = this
         presenter.start()
-        nextButton.onClick {
-            presenter.nextButtonClick()
-        }
+
+        gotoMainButton.onClick { presenter.gotoMainButtonClick() }
     }
 
     override fun parsingIntent() {
+        val menus = intent.extras.getParcelableArrayList<Menu>("menus")
         val restaurant = intent.extras.getParcelable<Restaurant>("restaurant")
         val price = intent.extras.getParcelable<Price>("price")
-        presenter.initData(restaurant, price)
+        presenter.initData(menus, restaurant, price)
     }
 
     override fun showTitle(title: String) {
@@ -64,35 +66,32 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         phoneTextView.text = phone
     }
 
-    override fun showRatingBar(rating: Float) {
-        ratingBar.rating = rating
+    @SuppressLint("SetTextI18n")
+    override fun showSum(sum: Int) {
+        sumTextView.text = "총합 : ${Price().formatMoney(sum.toString())}￦"
     }
 
     override fun initCategoryRecyclerView(categories: ArrayList<Category>) {
-        categoryRecyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
-        categoryRecyclerView.setOnTouchListener { _, _ -> true }
-        LastAdapter(categories, BR.item)
-                .map<Category>(R.layout.item_detail_category)
-                .into(categoryRecyclerView)
+        categoryRecyclerView.let {
+            it.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
+            it.setOnTouchListener { _, _ -> true }
+            LastAdapter(categories, BR.item)
+                    .map<Category>(R.layout.item_restaurants_category)
+                    .into(it)
+        }
     }
 
     @SuppressLint("SetTextI18n")
     override fun initMenuRecyclerView(menus: ArrayList<Menu>, price: Price) {
         menuRecyclerView.layoutManager = LinearLayoutManager(this)
-        LastAdapter(menus, BR.item).apply {
-            val adapter = this
-            map<Menu, ItemMenuBinding>(R.layout.item_menu) {
-                onBind {
-                    it.itemView.priceTextView.text = "${Price().formatMoney(it.binding.item!!.price.toString())}￦"
-
-                    it.itemView.errorPriceTextView.text = "± ${calcMoney(it.binding.item!!.price, price)}￦"
+        LastAdapter(menus, BR.item)
+                .map<Menu, ItemMenuBinding>(R.layout.item_menu) {
+                    onCreate {
+                        it.itemView.priceTextView.text = "${Price().formatMoney(it.binding.item!!.price.toString())}￦"
+                        it.itemView.errorPriceTextView.text = "± ${calcMoney(it.binding.item!!.price, price)}￦"
+                    }
                 }
-                onClick {
-                    presenter.menuClick(adapter, it.adapterPosition)
-                }
-            }
-            into(menuRecyclerView)
-        }
+                .into(menuRecyclerView)
     }
 
     private fun calcMoney(price: Int, _price: Price): String {
@@ -103,8 +102,9 @@ class DetailActivity : AppCompatActivity(), DetailContract.View {
         return Price().formatMoney(money.toString())
     }
 
-    override fun startCompleteActivity(menus: ArrayList<Menu>, restaurant: Restaurant, price: Price) {
-        startActivity<CompleteActivity>("menus" to menus, "restaurant" to restaurant, "price" to price)
+    override fun startMainActivity() {
+        startActivity<MainActivity>()
+        finishAffinity()
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

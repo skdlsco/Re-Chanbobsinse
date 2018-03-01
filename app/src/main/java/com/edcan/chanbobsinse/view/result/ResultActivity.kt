@@ -19,10 +19,12 @@ import com.edcan.chanbobsinse.listener.AppBarOffSetChangedListener
 import com.edcan.chanbobsinse.models.Category
 import com.edcan.chanbobsinse.models.Price
 import com.edcan.chanbobsinse.models.Restaurant
+import com.edcan.chanbobsinse.view.detail.DetailActivity
 import com.github.nitrico.lastadapter.LastAdapter
 import kotlinx.android.synthetic.main.activity_result.*
 import kotlinx.android.synthetic.main.item_restaurants.view.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
+import org.jetbrains.anko.startActivity
 
 class ResultActivity : AppCompatActivity(), ResultContract.View {
 
@@ -61,6 +63,11 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
             FAB.isSelected = !FAB.isSelected
             presenter.floatingActionButtonClick(FAB.isSelected)
         }
+    }
+
+
+    override fun startDetailActivity(restaurant: Restaurant, price: Price) {
+        startActivity<DetailActivity>("restaurant" to restaurant, "price" to price)
     }
 
     private fun initAppBar() {
@@ -118,6 +125,9 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
                         LastAdapter(it.binding.item!!.categories, BR.item)
                                 .map<Category>(R.layout.item_restaurants_category)
                                 .into(it.itemView.categoryRecyclerView)
+                    }
+                    onClick {
+                        presenter.restaurantsItemClick(it.binding.item!!)
                     }
                 }
                 .into(restaurantsRecyclerView)

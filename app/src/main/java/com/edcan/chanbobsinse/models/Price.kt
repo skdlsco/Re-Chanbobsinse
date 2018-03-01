@@ -27,13 +27,7 @@ class Price() : Parcelable {
         range = parcel.readString()
     }
 
-    fun getArray() = ArrayList<String>().apply {
-        add(min)
-        add(max)
-        add(range)
-    }
-
-    private fun formatMoney(input: String): String {
+    fun formatMoney(input: String): String {
         var output = ""
         if (input.isNotEmpty()) {
             val decimalFormat = DecimalFormat("#,##0")
@@ -42,6 +36,12 @@ class Price() : Parcelable {
                 output.substring(0, output.lastIndex - 1)
         }
         return output
+    }
+
+    fun getArray() = ArrayList<String>().apply {
+        add(min)
+        add(max)
+        add(range)
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
