@@ -27,10 +27,11 @@ class CompletePresenter : CompleteContract.Presenter {
         view.initMenuRecyclerView(model.menus, model.price)
     }
 
-    override fun initData(menus: ArrayList<Menu>, restaurant: Restaurant, price: Price) {
+    override fun initData(menus: ArrayList<Menu>, restaurant: Restaurant, price: Price, isRandom: Boolean) {
         model.menus = menus
         model.restaurant = restaurant
         model.price = price
+        model.isRandom = isRandom
     }
 
     override fun gotoMainButtonClick() {

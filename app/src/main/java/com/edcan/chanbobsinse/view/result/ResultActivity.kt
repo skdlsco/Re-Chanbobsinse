@@ -16,8 +16,10 @@ import com.edcan.chanbobsinse.R
 import com.edcan.chanbobsinse.databinding.ItemRestaurantsBinding
 import com.edcan.chanbobsinse.listener.AppBarOffSetChangedListener
 import com.edcan.chanbobsinse.models.Category
+import com.edcan.chanbobsinse.models.Menu
 import com.edcan.chanbobsinse.models.Price
 import com.edcan.chanbobsinse.models.Restaurant
+import com.edcan.chanbobsinse.view.complete.CompleteActivity
 import com.edcan.chanbobsinse.view.detail.DetailActivity
 import com.github.nitrico.lastadapter.LastAdapter
 import com.google.android.gms.maps.model.LatLng
@@ -68,6 +70,10 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
 
     override fun startDetailActivity(restaurant: Restaurant, price: Price) {
         startActivity<DetailActivity>("restaurant" to restaurant, "price" to price)
+    }
+
+    override fun startCompleteActivity(menus: ArrayList<Menu>, restaurant: Restaurant, price: Price) {
+        startActivity<CompleteActivity>("menus" to menus, "restaurant" to restaurant, "price" to price, "random" to true)
     }
 
     private fun initAppBar() {
@@ -164,4 +170,5 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
         }
         return super.onOptionsItemSelected(item)
     }
+
 }

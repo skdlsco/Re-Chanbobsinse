@@ -19,7 +19,7 @@
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="355dp"
+                android:layout_marginTop="175dp"
                 app:layout_collapseMode="pin">
 
                 <ImageView
@@ -178,13 +178,13 @@
                         android:src="@drawable/ic_place" />
                 </LinearLayout>
 
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/famousRestaurantsRecyclerView"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    tools:layoutManager="android.support.v7.widget.LinearLayoutManager"
-                    tools:listitem="@layout/item_famous_restaurants"
-                    tools:orientation="horizontal" />
+                <!--<android.support.v7.widget.RecyclerView-->
+                    <!--android:id="@+id/famousRestaurantsRecyclerView"-->
+                    <!--android:layout_width="match_parent"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--tools:layoutManager="android.support.v7.widget.LinearLayoutManager"-->
+                    <!--tools:listitem="@layout/item_famous_restaurants"-->
+                    <!--tools:orientation="horizontal" />-->
             </LinearLayout>
         </android.support.design.widget.CollapsingToolbarLayout>
     </android.support.design.widget.AppBarLayout>

@@ -1,6 +1,7 @@
 package com.edcan.chanbobsinse.view.result
 
 import com.edcan.chanbobsinse.models.Category
+import com.edcan.chanbobsinse.models.Menu
 import com.edcan.chanbobsinse.models.Price
 import com.edcan.chanbobsinse.models.Restaurant
 import com.edcan.chanbobsinse.view.BasePresenter
@@ -23,6 +24,7 @@ interface ResultContract {
         fun initCategoryRecyclerView(categories: ArrayList<Category>)
         fun initRestaurantsRecyclerView(restaurants: ArrayList<Restaurant>)
 
+        fun startCompleteActivity(menus: ArrayList<Menu>, restaurant: Restaurant, price: Price)
         fun startDetailActivity(restaurant: Restaurant, price: Price)
     }
 

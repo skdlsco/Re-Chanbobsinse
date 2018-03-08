@@ -28,7 +28,7 @@ interface CompleteContract {
         var view: View
         var model: CompleteModel
 
-        fun initData(menus: ArrayList<Menu>, restaurant: Restaurant, price: Price)
+        fun initData(menus: ArrayList<Menu>, restaurant: Restaurant, price: Price, isRandom: Boolean)
         fun gotoMainButtonClick()
     }
 

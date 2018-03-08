@@ -48,10 +48,11 @@ class CompleteActivity : AppCompatActivity(), CompleteContract.View {
     }
 
     override fun parsingIntent() {
+        val isRandom = intent.extras.getBoolean("random")
         val menus = intent.extras.getParcelableArrayList<Menu>("menus")
         val restaurant = intent.extras.getParcelable<Restaurant>("restaurant")
         val price = intent.extras.getParcelable<Price>("price")
-        presenter.initData(menus, restaurant, price)
+        presenter.initData(menus, restaurant, price, isRandom)
     }
 
     override fun showTitle(title: String) {

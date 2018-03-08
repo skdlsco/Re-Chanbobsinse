@@ -17,6 +17,7 @@ class CompleteModel {
         }
     var restaurant: Restaurant = Restaurant()
     var price: Price = Price()
+    var isRandom = false
 
     fun getSum(): Int = menus.sumBy { it.price }
 }
