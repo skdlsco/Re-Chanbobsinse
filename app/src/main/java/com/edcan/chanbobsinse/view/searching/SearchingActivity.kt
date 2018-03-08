@@ -35,6 +35,9 @@ class SearchingActivity : AppCompatActivity(), SearchingContract.View {
         val price = extras.getParcelable<Price>("price")
         val categories = extras.getParcelableArrayList<Category>("categories")
         val address = extras.getString("address")
-        startActivity<ResultActivity>("price" to price, "address" to address, "categories" to categories)
+        val lat = extras.getDouble("lat")
+        val lng = extras.getDouble("lng")
+        startActivity<ResultActivity>("price" to price, "address" to address,
+                "categories" to categories, "lat" to lat, "lng" to lng)
     }
 }

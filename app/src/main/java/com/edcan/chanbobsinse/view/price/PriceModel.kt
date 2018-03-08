@@ -2,6 +2,7 @@ package com.edcan.chanbobsinse.view.price
 
 import com.edcan.chanbobsinse.models.Category
 import com.edcan.chanbobsinse.models.Price
+import com.google.android.gms.maps.model.LatLng
 
 /**
  * Created by eka on 2018. 2. 21..
@@ -10,6 +11,7 @@ class PriceModel {
     var categories = ArrayList<Category>()
     var address = ""
     var price = Price()
+    var latLng = LatLng(0.0, 0.0)
 
     fun checkPrice(): String = when {
         price.min.isEmpty() || price.max.isEmpty() -> ("최소, 최대 금액를 입력해주세요.")

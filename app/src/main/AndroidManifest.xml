@@ -24,7 +24,13 @@
         <activity android:name=".view.searching.SearchingActivity" />
         <activity android:name=".view.result.ResultActivity" />
         <activity android:name=".view.detail.DetailActivity" />
-        <activity android:name=".view.complete.CompleteActivity"></activity>
+        <activity android:name=".view.complete.CompleteActivity" />
+        <activity android:name=".view.map.MapActivity" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key" />
+        <service android:name=".utils.GpsInfo" />
     </application>
 
 </manifest>

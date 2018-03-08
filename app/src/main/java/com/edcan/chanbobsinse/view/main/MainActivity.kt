@@ -4,6 +4,8 @@ import android.Manifest
 import android.animation.ArgbEvaluator
 import android.animation.ValueAnimator
 import android.annotation.SuppressLint
+import android.app.Activity
+import android.content.Intent
 import android.graphics.Color
 import android.graphics.PorterDuff
 import android.os.Bundle
@@ -22,8 +24,10 @@ import com.edcan.chanbobsinse.R
 import com.edcan.chanbobsinse.databinding.ItemMainCategoryBinding
 import com.edcan.chanbobsinse.listener.AppBarOffSetChangedListener
 import com.edcan.chanbobsinse.models.Category
+import com.edcan.chanbobsinse.view.map.MapActivity
 import com.edcan.chanbobsinse.view.price.PriceActivity
 import com.github.nitrico.lastadapter.LastAdapter
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_main.*
 import org.jetbrains.anko.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
@@ -34,6 +38,7 @@ import java.util.*
 class MainActivity : AppCompatActivity(), MainContract.View {
 
     val REQUEST_PERMISSION_CODE = 1000
+    val REQUEST_MAP_CODE = 3000
     override var presenter: MainContract.Presenter = MainPresenter()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +61,7 @@ class MainActivity : AppCompatActivity(), MainContract.View {
                 contentContainer.layoutParams = params
             }
         })
-
+        mapButton.onClick { presenter.mapButtonClick() }
         requestPermission()
     }
 
@@ -86,8 +91,17 @@ class MainActivity : AppCompatActivity(), MainContract.View {
         }
     }
 
-    override fun startPriceActivity(categories: ArrayList<Category>, address: String) {
-        startActivity<PriceActivity>("address" to address, "categories" to categories)
+    override fun startPriceActivity(categories: ArrayList<Category>, address: String, latLng: LatLng) {
+        startActivity<PriceActivity>("address" to address, "categories" to categories,
+                "lat" to latLng.latitude, "lng" to latLng.longitude)
+    }
+
+    override fun startMapActivity(latLng: LatLng, address: String) {
+        startActivityForResult(Intent(this@MainActivity, MapActivity::class.java).apply {
+            putExtra("lat", latLng.latitude)
+            putExtra("lng", latLng.longitude)
+            putExtra("address", address)
+        }, REQUEST_MAP_CODE)
     }
 
     @SuppressLint("SimpleDateFormat")
@@ -109,6 +123,20 @@ class MainActivity : AppCompatActivity(), MainContract.View {
 
     override fun showToast(message: String) {
         toast(message)
+    }
+
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == REQUEST_MAP_CODE && resultCode == Activity.RESULT_OK && data != null) {
+            data.extras.run {
+                val lat = getDouble("lat")
+                val lng = getDouble("lng")
+                val address = getString("address")
+                Log.e("main", "onresult adress = $address")
+                presenter.mapResult(LatLng(lat, lng), address)
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun initAppBar() {

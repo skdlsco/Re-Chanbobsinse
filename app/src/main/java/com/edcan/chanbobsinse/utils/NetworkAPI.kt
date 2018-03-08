@@ -12,7 +12,12 @@ import retrofit2.http.Query
 interface NetworkAPI {
 
     @GET("/v1/map/reversegeocode")
-    fun changeAddress(@Query("query") latlng: String,
-                      @Header("X-Naver-Client-Id") id: String,
-                      @Header("X-Naver-Client-Secret") secret: String): Call<ResponseBody>
+    fun changeFromLatLng(@Query("query") latlng: String,
+                         @Header("X-Naver-Client-Id") id: String,
+                         @Header("X-Naver-Client-Secret") secret: String): Call<ResponseBody>
+
+    @GET("/v1/map/geocode")
+    fun changeFromAddress(@Query("query") address: String,
+                          @Header("X-Naver-Client-Id") id: String,
+                          @Header("X-Naver-Client-Secret") secret: String): Call<ResponseBody>
 }

@@ -4,6 +4,7 @@ import com.edcan.chanbobsinse.models.Category
 import com.edcan.chanbobsinse.models.Price
 import com.edcan.chanbobsinse.models.Restaurant
 import com.github.nitrico.lastadapter.LastAdapter
+import com.google.android.gms.maps.model.LatLng
 
 /**
  * Created by eka on 2018. 2. 19..
@@ -24,10 +25,11 @@ class ResultPresenter : ResultContract.Presenter {
         view.initRestaurantsRecyclerView(model.restaurants)
     }
 
-    override fun initData(price: Price, address: String, categories: ArrayList<Category>) {
+    override fun initData(price: Price, address: String, categories: ArrayList<Category>, latLng: LatLng) {
         model.address = address
         model.categories.addAll(categories)
         model.price = price
+        model.latLng = latLng
         view.showPriceRange(model.getRangeText())
         view.updateAddress(address)
         model.initRestaurants()

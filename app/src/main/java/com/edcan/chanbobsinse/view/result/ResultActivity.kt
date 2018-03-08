@@ -9,7 +9,6 @@ import android.support.design.widget.AppBarLayout
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
-import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import com.edcan.chanbobsinse.BR
@@ -21,6 +20,7 @@ import com.edcan.chanbobsinse.models.Price
 import com.edcan.chanbobsinse.models.Restaurant
 import com.edcan.chanbobsinse.view.detail.DetailActivity
 import com.github.nitrico.lastadapter.LastAdapter
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_result.*
 import kotlinx.android.synthetic.main.item_restaurants.view.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
@@ -98,11 +98,15 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
     }
 
     override fun parsingIntent() {
-        Log.e("브에엑", "${intent.extras.get("address")}")
-        val price = intent.extras.getParcelable<Price>("price")
-        val address = intent.extras.getString("address")
-        val categories = intent.extras.getParcelableArrayList<Category>("categories")
-        presenter.initData(price, address, categories)
+        intent.extras.run {
+
+            val price = getParcelable<Price>("price")
+            val address = getString("address")
+            val categories = getParcelableArrayList<Category>("categories")
+            val lat = getDouble("lat")
+            val lng = getDouble("lng")
+            presenter.initData(price, address, categories, LatLng(lat, lng))
+        }
     }
 
     override fun initCategoryRecyclerView(categories: ArrayList<Category>) {

@@ -2,8 +2,8 @@ package com.edcan.chanbobsinse.view.main
 
 import android.content.Context
 import android.content.pm.PackageManager
-import com.edcan.chanbobsinse.models.Category
 import com.github.nitrico.lastadapter.LastAdapter
+import com.google.android.gms.maps.model.LatLng
 
 /**
  * Created by eka on 2018. 2. 21..
@@ -39,6 +39,16 @@ class MainPresenter : MainContract.Presenter {
     }
 
     override fun nextButtonClick() {
-        view.startPriceActivity(ArrayList(model.getSelectedItem()), model.address)
+        view.startPriceActivity(ArrayList(model.getSelectedItem()), model.address, model.latLng)
+    }
+
+    override fun mapButtonClick() {
+        view.startMapActivity(model.latLng, model.address)
+    }
+
+    override fun mapResult(latLng: LatLng, address: String) {
+        model.latLng = latLng
+        model.address = address
+        view.updateAddress(address)
     }
 }

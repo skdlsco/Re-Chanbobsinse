@@ -159,18 +159,15 @@
 
                     <TextView
                         android:id="@+id/addressTextView"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="8dp"
-                        android:fontFamily="@font/nanum_square_regular"
-                        android:text="서울시 용산구 청파동"
-                        android:textColor="@color/colorBlack"
-                        android:textSize="12sp" />
-
-                    <Space
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_weight="1" />
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:fontFamily="@font/nanum_square_regular"
+                        android:lines="1"
+                        android:textColor="@color/colorBlack"
+                        android:textSize="12sp"
+                        tools:text="서울시 용산구 청파동" />
 
                     <ImageView
                         android:id="@+id/mapButton"

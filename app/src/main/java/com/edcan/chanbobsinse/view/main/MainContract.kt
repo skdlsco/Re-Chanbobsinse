@@ -5,6 +5,7 @@ import com.edcan.chanbobsinse.models.Category
 import com.edcan.chanbobsinse.view.BasePresenter
 import com.edcan.chanbobsinse.view.BaseView
 import com.github.nitrico.lastadapter.LastAdapter
+import com.google.android.gms.maps.model.LatLng
 
 /**
  * Created by eka on 2018. 2. 21..
@@ -16,7 +17,8 @@ interface MainContract {
 
         fun initRecyclerView(categories: ArrayList<Category>)
 
-        fun startPriceActivity(categories: ArrayList<Category>, address: String)
+        fun startPriceActivity(categories: ArrayList<Category>, address: String, latLng: LatLng)
+        fun startMapActivity(latLng: LatLng, address: String)
     }
 
     interface Presenter : BasePresenter {
@@ -27,5 +29,7 @@ interface MainContract {
 
         fun nextButtonClick()
         fun categoryClick(adapter: LastAdapter, position: Int)
+        fun mapButtonClick()
+        fun mapResult(latLng: LatLng, address: String)
     }
 }

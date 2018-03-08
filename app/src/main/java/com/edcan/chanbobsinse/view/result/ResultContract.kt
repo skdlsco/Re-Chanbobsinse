@@ -6,6 +6,7 @@ import com.edcan.chanbobsinse.models.Restaurant
 import com.edcan.chanbobsinse.view.BasePresenter
 import com.edcan.chanbobsinse.view.BaseView
 import com.github.nitrico.lastadapter.LastAdapter
+import com.google.android.gms.maps.model.LatLng
 
 /**
  * Created by eka on 2018. 2. 19..
@@ -30,7 +31,7 @@ interface ResultContract {
         var model: ResultModel
         var categoryAdapter: LastAdapter
         var restaurantAdapter: LastAdapter
-        fun initData(price: Price, address: String, categories: ArrayList<Category>)
+        fun initData(price: Price, address: String, categories: ArrayList<Category>, latLng: LatLng)
 
         fun floatingActionButtonClick(show: Boolean)
         fun randomButtonClick()

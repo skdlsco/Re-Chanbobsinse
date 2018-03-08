@@ -15,6 +15,7 @@ import com.edcan.chanbobsinse.R
 import com.edcan.chanbobsinse.models.Category
 import com.edcan.chanbobsinse.models.Price
 import com.edcan.chanbobsinse.view.searching.SearchingActivity
+import com.google.android.gms.maps.model.LatLng
 import kotlinx.android.synthetic.main.activity_price.*
 import org.jetbrains.anko.sdk25.coroutines.onClick
 import org.jetbrains.anko.startActivity
@@ -59,13 +60,17 @@ class PriceActivity : AppCompatActivity(), PriceContract.View {
     }
 
     override fun parsingIntent() {
-        val address = intent.extras.getString("address")
-        val categories: ArrayList<Category> = intent.extras.getParcelableArrayList<Category>("categories")
-        presenter.initData(address, categories)
+        intent.extras.run {
+            val address = getString("address")
+            val categories: ArrayList<Category> = getParcelableArrayList<Category>("categories")
+            val latLng = LatLng(getDouble("lat"), getDouble("lng"))
+            presenter.initData(address, categories, latLng)
+        }
     }
 
-    override fun startSearchingActivity(address: String, categories: ArrayList<Category>, price: Price) {
-        startActivity<SearchingActivity>("address" to address, "categories" to categories, "price" to price)
+    override fun startSearchingActivity(address: String, categories: ArrayList<Category>, price: Price, latLng: LatLng) {
+        startActivity<SearchingActivity>("address" to address, "categories" to categories,
+                "price" to price, "lat" to latLng.latitude, "lng" to latLng.longitude)
     }
 
     override fun onOptionsItemSelected(item: MenuItem?): Boolean {

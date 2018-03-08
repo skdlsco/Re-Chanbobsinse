@@ -21,7 +21,7 @@ import android.support.v4.app.ActivityCompat
  * Created by eka on 2017. 8. 19..
  */
 
-class GpsInfo : Service, LocationListener {
+open class GpsInfo : Service, LocationListener {
 
     constructor() {
         stopSelf()
@@ -46,7 +46,7 @@ class GpsInfo : Service, LocationListener {
     var lat: Double = 0.toDouble() // 위도
     var lon: Double = 0.toDouble() // 경도
 
-    protected var locationManager: LocationManager? = null
+    var locationManager: LocationManager? = null
 
     constructor(context: Context) {
         this.mContext = context
@@ -179,22 +179,18 @@ class GpsInfo : Service, LocationListener {
 
     override fun onLocationChanged(location: Location) {
         // TODO Auto-generated method stub
-
     }
 
     override fun onStatusChanged(provider: String, status: Int, extras: Bundle) {
         // TODO Auto-generated method stub
-
     }
 
     override fun onProviderEnabled(provider: String) {
         // TODO Auto-generated method stub
-
     }
 
     override fun onProviderDisabled(provider: String) {
         // TODO Auto-generated method stub
-
     }
 
     companion object {

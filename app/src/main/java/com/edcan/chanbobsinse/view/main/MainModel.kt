@@ -1,9 +1,11 @@
 package com.edcan.chanbobsinse.view.main
 
 import android.content.Context
+import android.util.Log
 import com.edcan.chanbobsinse.models.Category
 import com.edcan.chanbobsinse.utils.GpsInfo
 import com.edcan.chanbobsinse.utils.NetworkHelper
+import com.google.android.gms.maps.model.LatLng
 import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
@@ -15,7 +17,9 @@ import retrofit2.Response
  */
 class MainModel {
     var gpsInfo: GpsInfo? = null
+    var latLng = LatLng(0.0, 0.0)
     var address = ""
+
     var categories = ArrayList<Category>().apply {
         add(Category().apply {
             title = "한식"
@@ -56,20 +60,29 @@ class MainModel {
     }
 
     fun makeAddress(callback: () -> Unit) {
-        gpsInfo!!.getLocation()
-        val latlng = "${gpsInfo!!.lon},${gpsInfo!!.lat}"
-        NetworkHelper.mapInstance.changeAddress(latlng, "WAtJVVGhyrZDGy4TGVXW", "AtG79bTvJh").enqueue(object : Callback<ResponseBody> {
-            override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
-            }
+        gpsInfo?.let {
+            it.getLocation()
+            latLng = LatLng(it.lat, it.lon)
+            NetworkHelper.mapInstance.changeFromLatLng("${latLng.longitude}, ${latLng.latitude}",
+                    "WAtJVVGhyrZDGy4TGVXW",
+                    "AtG79bTvJh").enqueue(object : Callback<ResponseBody> {
+                override fun onFailure(call: Call<ResponseBody>?, t: Throwable?) {
+                }
 
-            override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
-                val json = JSONObject(response?.body()!!.string())
-                        .getJSONObject("result")
-                        .getJSONArray("items").getJSONObject(0).getJSONObject("addrdetail")
-                address = "${formatSido(json.getString("sido"))} ${json.getString("sigugun")} ${json.getString("dongmyun")}"
-                callback.invoke()
-            }
-        })
+                override fun onResponse(call: Call<ResponseBody>?, response: Response<ResponseBody>?) {
+                    try {
+                        val json = JSONObject(response?.body()?.string())
+                                .getJSONObject("result")
+                                .getJSONArray("items").getJSONObject(0).getJSONObject("addrdetail")
+                        address = "${formatSido(json.getString("sido"))} ${json.getString("sigugun")} ${json.getString("dongmyun")}"
+                    } catch (e: Exception) {
+                        Log.e("asdf", e.message)
+                        return
+                    }
+                    callback.invoke()
+                }
+            })
+        }
     }
 
     fun formatSido(sido: String) = when (sido) {
