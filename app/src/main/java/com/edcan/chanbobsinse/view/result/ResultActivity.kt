@@ -9,6 +9,7 @@ import android.support.design.widget.AppBarLayout
 import android.support.v4.content.ContextCompat
 import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.LinearLayoutManager
+import android.util.Log
 import android.view.MenuItem
 import android.view.View
 import com.edcan.chanbobsinse.BR
@@ -65,6 +66,7 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
             FAB.isSelected = !FAB.isSelected
             presenter.floatingActionButtonClick(FAB.isSelected)
         }
+        coverView.onClick { }
     }
 
 
@@ -111,7 +113,8 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
             val categories = getParcelableArrayList<Category>("categories")
             val lat = getDouble("lat")
             val lng = getDouble("lng")
-            presenter.initData(price, address, categories, LatLng(lat, lng))
+            val restaurants = getParcelableArrayList<Restaurant>("restaurants")
+            presenter.initData(price, address, categories, LatLng(lat, lng), restaurants)
         }
     }
 
@@ -155,7 +158,6 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
         coverView.visibility = View.VISIBLE
         FAB.background.setColorFilter(Color.WHITE, PorterDuff.Mode.SRC)
         FAB.drawable.setColorFilter(ContextCompat.getColor(this, R.color.colorOrange), PorterDuff.Mode.SRC_ATOP)
-
     }
 
     override fun hideCoverView() {
@@ -171,4 +173,10 @@ class ResultActivity : AppCompatActivity(), ResultContract.View {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onBackPressed() {
+        if (coverView.visibility == View.VISIBLE)
+            hideCoverView()
+        else
+            super.onBackPressed()
+    }
 }

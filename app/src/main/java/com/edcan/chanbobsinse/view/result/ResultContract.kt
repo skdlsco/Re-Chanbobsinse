@@ -33,7 +33,7 @@ interface ResultContract {
         var model: ResultModel
         var categoryAdapter: LastAdapter
         var restaurantAdapter: LastAdapter
-        fun initData(price: Price, address: String, categories: ArrayList<Category>, latLng: LatLng)
+        fun initData(price: Price, address: String, categories: ArrayList<Category>, latLng: LatLng, restaurants: ArrayList<Restaurant>)
 
         fun floatingActionButtonClick(show: Boolean)
         fun randomButtonClick()

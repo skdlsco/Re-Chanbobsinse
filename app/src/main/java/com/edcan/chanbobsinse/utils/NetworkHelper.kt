@@ -9,27 +9,26 @@ import retrofit2.converter.gson.GsonConverterFactory
  * Created by eka on 2018. 2. 23..
  */
 object NetworkHelper {
-    private const val url = ""
+    private const val url = "http://iwin247.info:3355"
     private const val mapUrl = "https://openapi.naver.com/"
-    private const val port = 0
 
+    var mapRetrofit: Retrofit? = null
     var retrofit: Retrofit? = null
-
     val mapInstance: NetworkAPI
         get() {
-            if (retrofit == null) {
-                retrofit = Retrofit.Builder()
+            if (mapRetrofit == null) {
+                mapRetrofit = Retrofit.Builder()
                         .baseUrl(mapUrl)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build()
             }
-            return retrofit!!.create<NetworkAPI>(NetworkAPI::class.java)
+            return mapRetrofit!!.create<NetworkAPI>(NetworkAPI::class.java)
         }
-    val networkInstance: NetworkAPI
+    val restaurantInstance: NetworkAPI
         get() {
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
-                        .baseUrl(url + ":" + port)
+                        .baseUrl(url)
                         .addConverterFactory(GsonConverterFactory.create())
                         .build()
             }

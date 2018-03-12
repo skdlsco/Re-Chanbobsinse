@@ -39,7 +39,10 @@ class MainPresenter : MainContract.Presenter {
     }
 
     override fun nextButtonClick() {
-        view.startPriceActivity(ArrayList(model.getSelectedItem()), model.address, model.latLng)
+        if (ArrayList(model.getSelectedItem()).isEmpty())
+            view.showToast("한 개 이상의 카테고리를 선택해 주세요!")
+        else
+            view.startPriceActivity(ArrayList(model.getSelectedItem()), model.address, model.latLng)
     }
 
     override fun mapButtonClick() {

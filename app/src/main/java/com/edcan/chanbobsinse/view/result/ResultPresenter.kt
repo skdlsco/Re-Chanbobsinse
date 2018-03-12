@@ -13,7 +13,6 @@ import kotlin.collections.ArrayList
  * Created by eka on 2018. 2. 19..
  */
 class ResultPresenter : ResultContract.Presenter {
-
     override var model = ResultModel()
     override lateinit var view: ResultContract.View
     override lateinit var categoryAdapter: LastAdapter
@@ -35,14 +34,16 @@ class ResultPresenter : ResultContract.Presenter {
         view.hideCoverView()
     }
 
-    override fun initData(price: Price, address: String, categories: ArrayList<Category>, latLng: LatLng) {
-        model.address = address
-        model.categories.addAll(categories)
-        model.price = price
-        model.latLng = latLng
-        view.showPriceRange(model.getRangeText())
+    override fun initData(price: Price, address: String, categories: ArrayList<Category>, latLng: LatLng, restaurants: ArrayList<Restaurant>) {
+        model.let {
+            it.address = address
+            it.categories.addAll(categories)
+            it.price = price
+            it.latLng = latLng
+            it.restaurants = restaurants
+        }
         view.updateAddress(address)
-        model.initRestaurants()
+        view.showPriceRange(model.getRangeText())
     }
 
     override fun floatingActionButtonClick(show: Boolean) {
